@@ -1,3 +1,60 @@
 * {
     box-sizing: border-box;
 }
+
+/* .gallery {
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-auto-rows: 200px;
+    gap: 30px;
+    padding: 0px 55px 30px;
+} */
+
+.gallery-container img {
+    max-height: 300px;
+    border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#my-canvas {
+    border: 1px solid black;
+}
+
+/* HELPERS */
+
+.flex {
+    display: flex;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.grow-1 {
+    flex-grow: 1;
+}
+
+.hide {
+    display: none;
+}
+
+.grid {
+    display: grid;
+}
+
+.grid-fill {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 100px));
+}

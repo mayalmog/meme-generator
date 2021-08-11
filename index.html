@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MemeGen</title>
+    <link rel="stylesheet" href="./css/main.css">
 </head>
-<body>
-    
+
+<body onload="onInit()">
+
+    <header></header>
+    <section class="gallery-container grid grid-fill">
+        <img src="./images/meme-imgs (square)/1.jpg" onclick="onOpenEditor(1)">
+        <img src="./images/meme-imgs (square)/2.jpg" onclick="onOpenEditor(2)">
+
+
+    </section>
+
+    <main class="editor-container flex flex-row hide">
+        <div class="canvas-container grow-1 justify-center">
+            <h3>Container</h3>
+            <canvas id="my-canvas" height="450" width="450"></canvas>
+        </div>
+
+        <div class="canvas-editor flex flex-column align-center grow-1 justify-center">
+            <input name="meme-line" placeholder="Type text here" type="text">
+        </div>
+
+        <div class="canvas-img-container"></div>
+    </main>
+
+
+    <script src="./js/meme-service.js"></script>
+    <script src="./js/meme-controller.js"></script>
 </body>
+
 </html>
