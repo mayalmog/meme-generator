@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
 /* .gallery {
     grid-template-columns: repeat(auto-fit, 200px);
     grid-auto-rows: 200px;
@@ -19,6 +24,10 @@
 
 #my-canvas {
     border: 1px solid black;
+}
+
+.logo img {
+    width: 100px;
 }
 
 /* HELPERS */
@@ -57,4 +66,10 @@
 
 .grid-fill {
     grid-template-columns: repeat(auto-fill, minmax(100px, 100px));
+}
+
+.clean-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
