@@ -88,6 +88,11 @@
     display: block;
 }
 
+.fas.fa-bars::before {
+    content: "\f0c9";
+    display: block;
+}
+
 /* BODY */
 
 html {
@@ -104,7 +109,7 @@ body {
 
 .main-container {
     padding: 10px;
-    width: 450px;
+    min-width: 450px;
     margin: auto
 }
 
@@ -133,11 +138,17 @@ body {
     bottom: 0;
     right: 0;
     opacity: 0;
-    visibility: hidden;
-    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    background-color: rgb(0 0 0 / 50%);
     cursor: pointer;
-    transition: opacity 0.5s, visibility 0.5s;
-    z-index: 1;
+    transition: opacity .6s;
+    pointer-events: none;
+}
+
+body.menu-open .screen {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .gradient-background {
@@ -163,24 +174,105 @@ body {
 }
 
 .main-nav {
-    width: 50%;
     font-size: 1.05em;
+    position: fixed;
+    top: 0;
+    right: 0;
+    min-width: 200px;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+    background-image: linear-gradient( 90deg, #0f9ab4, #30bb72);
+    box-shadow: 0px 0px 0px transparent;
+    z-index: 1;
+    transform: translateX(100%);
+    transition: 0.5s;
 }
 
-.main-nav>*:not(:last-child) {
-    margin-inline-end: 40px;
+.main-nav>* a {
+    display: block;
+    text-align: center;
+    border-bottom: 1px solid black;
+    padding: 20px 13px;
 }
 
-body.show-gallery .btn-gallery, body.open-memes .btn-memes, body.open-about .btn-about {
+.btn-menu-toggle {
+    margin-left: 100px;
+    border-radius: 50%;
+    padding: 10px;
     background-color: #fff;
     color: #21ac91;
     box-shadow: 0 4px 4px rgb(0 0 0 / 14%);
 }
 
-.main-nav>* a {
-    padding: 5px 13px;
-    border-radius: 2em;
-    transition: 0.5s;
+body.menu-open .main-nav {
+    transform: translateX(0);
+    box-shadow: -8px 0px 20px rgb(0 0 0 / 50%);
+}
+
+/* MOBILE ONLY */
+
+/* @media (max-width: 630px) {
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        min-width: 200px;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 100vh;
+        background-image: linear-gradient( 90deg, #0f9ab4, #30bb72);
+        box-shadow: -8px 0px 20px rgb(0 0 0 / 50%);
+        z-index: 1;
+    }
+    .main-nav>* a {
+        display: block;
+        text-align: center;
+        border-bottom: 1px solid black;
+        padding: 5px 13px;
+        margin: 0 0 30px;
+    }
+    .btn-gallery {
+        padding-top: 30px;
+    }
+} */
+
+@media (min-width: 630px) {
+    .main-nav {
+        transform: unset;
+        position: unset;
+        top: unset;
+        right: unset;
+        min-width: unset;
+        width: 100%;
+        flex-direction: row;
+        justify-content: flex-end;
+        height: unset;
+        background-image: unset;
+        box-shadow: unset;
+    }
+    .main-nav>*:not(:last-child) {
+        margin-inline-end: 40px;
+    }
+    .main-nav>* a {
+        margin: unset;
+        display: unset;
+        border: none;
+        padding: 5px 13px;
+        border-radius: 2em;
+        transition: 0.5s;
+    }
+    .btn-menu-toggle {
+        display: none;
+    }
+}
+
+@media (min-width: 630px) {
+    body.show-gallery .btn-gallery, body.open-memes .btn-memes, body.open-about .btn-about {
+        background-color: #fff;
+        color: #21ac91;
+        box-shadow: 0 4px 4px rgb(0 0 0 / 14%);
+    }
 }
 
 button, a {
@@ -292,6 +384,7 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-width: 350px;
     gap: 20px;
 }
 
@@ -311,7 +404,7 @@ header {
 
 .canvas-editor-container {
     background-color: #383b42;
-    width: 310px;
+    min-width: 350px;
     height: 435px;
     padding: 15px 15px;
 }

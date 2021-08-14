@@ -2,6 +2,8 @@
 var gCanvas;
 var gCtx;
 var gCurrTxtLine;
+const gTouchEvs = ['touchstart', 'touchmove', 'touchend'];
+var gStartPos;
 
 
 function onInit() {
@@ -10,11 +12,16 @@ function onInit() {
     gCtx = gCanvas.getContext('2d');
 
     renderGallery();
-
+    //drag and drop listeners(nouse and touch)):
+    addListeners();
     //listen for text input:
     var input = document.querySelector('[name="meme-line"]');
     input.addEventListener('input', textEditFromInput);
 
+}
+
+function onToggleMenu() {
+    document.querySelector('body').classList.toggle('menu-open');
 }
 
 function renderGallery() {
@@ -24,13 +31,14 @@ function renderGallery() {
 
 function onOpenGallery() {
     openGallery();
+    onToggleMenu();
 }
 
 function onOpenEditor(num) {
     openEditor();
     var currMeme = getMeme();
     currMeme.selectedImgId = +num;
-    console.log(num);
+
     drawImg(num);
 }
 
@@ -49,18 +57,21 @@ function drawImg(id) {
     var elImg = document.querySelector('.canvas-img');
     // Naive approach:
     // there is a risk that image is not loaded yet and nothing will be drawn on canvas
-    console.log(gCanvas.width, gCanvas.height);
+
     gCtx.drawImage(elImg, 0, 0, gCanvas.width, gCanvas.height);
 }
 
 function drawText() {
-    //TO DO: needs map to render all object texts- done
-    //TO DO: add default line placing
+    //no lines:
     var currMeme = getMeme();
-    // var currline = currMeme.selectedLineIdx;
-
+    if (currMeme.lines.length === 0) return;
 
     currMeme.lines.forEach(function (currline, idx) {
+        if (currline.txt === '') {
+            currline.lineX = gCanvas.width / 2;
+        } else {
+            currline.lineX = currline.lineX;
+        }
         // var txt = currMeme.lines[currline].txt;
         // var txtFontSize = currMeme.lines[currline].size
         // var txtAlign = currMeme.lines[currline].align;
@@ -80,14 +91,11 @@ function drawText() {
 
         //TEXT COLORS
         gCtx.strokeStyle = `${txtColor}`;
-
         if (currline.stroke) {
             gCtx.fillStyle = `${txtColor}`;
         } else {
             gCtx.fillStyle = 'white';
         }
-
-
         //TEXT ALIGN
         switch (txtAlign) {
             case 'center':
@@ -130,9 +138,15 @@ function drawText() {
                     gCtx.strokeText(txt, currline.lineX, txtLineY)
                 }
                 break;
+            default:
+                currline.lineX = currline.lineX;
+                gCtx.fillText(txt, currline.lineX, txtLineY)
+                gCtx.strokeText(txt, currline.lineX, txtLineY)
+                break;
         }
         if (currMeme.selectedLineIdx === idx) {
             drawRect(gCtx.measureText(txt).width);
+
         }
     })
 
@@ -144,6 +158,9 @@ function textEditFromInput(e) {//change gMeme line text according to input
     var currline = currMeme.selectedLineIdx;
     var memeId = +currMeme.selectedImgId;
     //update model:
+    if (currMeme.lines.length === 0) {
+        currMeme.lines.push({ txt: '', size: 40, align: 'center', color: 'black', lineY: 0, lineX: 0, font: 'Impact', firstEdit: true, stroke: false, isDrag: false });
+    }
     currMeme.lines[currline].txt = e.target.value;
 
     drawImg(memeId);
@@ -197,7 +214,7 @@ function onChangeLineHeight(num) {
 function onAddLine() {
     var currMeme = getMeme();
     //add new line to object(model):
-    var newLine = { txt: 'I never eat Falafel', size: 40, align: 'center', color: 'black', lineY: 0, lineX: 0, font: 'Impact', firstEdit: true, stroke: false };
+    var newLine = { txt: '', size: 40, align: 'center', color: 'black', lineY: 0, lineX: 0, font: 'Impact', firstEdit: true, stroke: false, isDrag: false };
     currMeme.lines.push(newLine);
     //change line index to new line:
     currMeme.selectedLineIdx++;
@@ -254,6 +271,80 @@ function toggleStroke() {
     drawImg(memeId);
     drawText();
 }
+
+// EVENT LISTENERS:
+
+function addListeners() {
+    addMouseListeners()
+    addTouchListeners()
+
+}
+
+function addMouseListeners() {
+    gCanvas.addEventListener('mousemove', onMove)
+    gCanvas.addEventListener('mousedown', onDown)
+    gCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+    gCanvas.addEventListener('touchmove', onMove)
+    gCanvas.addEventListener('touchstart', onDown)
+    gCanvas.addEventListener('touchend', onUp)
+}
+
+function onDown(ev) {
+    // var currMeme = getMeme();
+    // if (currMeme.lines.length === 0) return;
+
+    const pos = getEvPos(ev);
+    // console.log(pos);
+    console.log('line clicked', isLineClicked(pos));
+    if (!isLineClicked(pos)) return;
+    setLineDrag(true);
+    gStartPos = pos;
+    document.body.style.cursor = 'grabbing';
+}
+
+function onMove(ev) {
+    var currMeme = getMeme();
+    var memeId = +currMeme.selectedImgId;
+
+    const line = getLine();
+    if (!line) return;
+    if (line.isDrag) {
+        const pos = getEvPos(ev)
+        const dx = pos.x - gStartPos.x
+        const dy = pos.y - gStartPos.y
+        moveLine(dx, dy)
+        gStartPos = pos
+        drawImg(memeId);
+        drawText();
+    }
+}
+
+function onUp() {
+    setLineDrag(false);
+    document.body.style.cursor = 'grab'
+}
+
+function getEvPos(ev) {
+    var pos = {
+        x: ev.offsetX,
+        y: ev.offsetY
+    }
+    if (gTouchEvs.includes(ev.type)) {
+        ev.preventDefault()
+        ev = ev.changedTouches[0]
+        pos = {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
+        }
+    }
+    return pos
+}
+
+
+
 
 
 

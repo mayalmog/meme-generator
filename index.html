@@ -10,18 +10,18 @@
 </head>
 
 <body class="flex flex-column show-gallery" onload="onInit()">
-    <div class="screen main-screen" onclick="onToggleScreen()"></div>
 
     <header class="main-header gradient-background ">
-        <div class="main-container flex align-center space-between">
+        <div class="main-container header-container flex align-center space-between">
             <img class="logo" src="./images/logo/LOGO.png" alt="">
-            <ul class="main-nav flex clean-list justify-center">
+            <ul class="main-nav flex clean-list ">
                 <li><a class=" btn-gallery" href="#" onclick="onOpenGallery()">Gallery</a></li>
                 <li><a class="btn-memes" href="#" onclick="onToggleSavedMemesMenu()">Memes</a></li>
                 <li><a class="btn-about" href="#" onclick="onToggleAboutModal()">About</a></li>
             </ul>
-            <!-- <button class="menu-btn" onclick="onToggleMenu()"></button> -->
-            <div class="screen sbout-screen" onclick="onToggleAboutModal()"></div>
+            <button class="btn-menu-toggle fas fa-bars" onclick="onToggleMenu()"></button>
+
+            <div class="about-screen" onclick="onToggleAboutModal()"></div>
             <!-- <div class="about-modal flex flex-column justify-center">
                 <button class="close" onclick="onToggleAboutModal()">X</button>
                 <p>Made with 🥭 by May Almog</p>
@@ -30,6 +30,7 @@
         </div>
 
     </header>
+    <div class="screen" onclick="onToggleMenu()"></div>
 
     <main class="main-container">
         <section class="gallery-container main-container">

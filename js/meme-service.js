@@ -2,11 +2,15 @@
 
 var gKeywords = { 'happy': 12, 'funny puk': 1 };
 
+
+
 var gMeme = {
     selectedImgId: 1,
     selectedLineIdx: 0,
-    lines: [{ txt: '', size: 40, align: 'center', color: 'black', lineY: 0, lineX: 0, font: 'Impact', firstEdit: true, stroke: false }]
+    lines: []
 }
+
+// lines: [{ txt: '', size: 40, align: 'center', color: 'black', lineY: 0, lineX: 0, font: 'Impact', firstEdit: true, stroke: false }
 
 var gImgs = [
     { id: 1, url: 'img/1.jpg', keywords: ['trump'] },
@@ -60,8 +64,6 @@ function toggleAboutModal() {
     document.querySelector('body').classList.toggle("open-about");
 }
 
-
-
 // function drawPoint(x, y) {
 //     gCtx.beginPath();
 //     gCtx.arc(x, y, 10, 0, 2 * Math.PI);
@@ -91,7 +93,6 @@ function drawRect(width) {
             break;
 
     }
-
     gCtx.beginPath();
     gCtx.rect(x, y, widthForRect, height);
     gCtx.strokeStyle = 'white';
@@ -100,7 +101,6 @@ function drawRect(width) {
 }
 
 function getLineInitialY(lineIdx) {
-
     if (lineIdx === 0) {
         return gCanvas.height / 8;
     } else if (lineIdx === 1) {
@@ -111,13 +111,60 @@ function getLineInitialY(lineIdx) {
 }
 
 function getGalleryImgs() {
-
     var strHTML = ``;
-
     gImgs.forEach(img =>
         strHTML += `<img src="./images/meme-imgs (square)/${img.id}.jpg" onclick="onOpenEditor(${img.id})"></img>`
     )
-
     return strHTML
+}
+
+function isLineClicked(clickedPos) {
+    var isClickInLine = false;
+    gMeme.lines.forEach((currLine, idx) => {
+        var linePosX = currLine.lineX;
+        var linePosY = currLine.lineY;
+        // console.log(linePosX, linePosY);
+        var currLineMetrics = gCtx.measureText(currLine.txt);
+
+        var currLineWidth = currLineMetrics.width;
+        var currLineHeight = currLineMetrics.actualBoundingBoxAscent +
+            currLineMetrics.actualBoundingBoxDescent;
+        // console.log('width: ', currLineWidth, 'height', currLineHeight);
+        var isXClickInLine = ((linePosX - (currLineWidth / 2)) <= clickedPos.x) &&
+            (clickedPos.x <= (linePosX + (currLineWidth / 2)));
+        var isYClickInLine = ((linePosY - (currLineHeight / 2)) <= clickedPos.y) &&
+            (clickedPos.y <= (linePosY + currLineHeight));
+        if (isXClickInLine && isYClickInLine) {
+            gMeme.selectedLineIdx = idx;
+            isClickInLine = isXClickInLine && isYClickInLine;
+        }
+    })
+    // console. log('isClickInLineFunc: ' + isClickInLine);
+    return isClickInLine;
+
+}
+
+
+function setLineDrag(isDrag) {
+
+    var currLine = gMeme.lines[gMeme.selectedLineIdx];
+    if (!currLine) return;
+
+    gMeme.lines[gMeme.selectedLineIdx].isDrag = isDrag;
+    gMeme.lines[gMeme.selectedLineIdx].align = '';
+
+
+}
+
+function getLine() {
+    return gMeme.lines[gMeme.selectedLineIdx];
+
+}
+
+
+function moveLine(dx, dy) {
+    var currLine = gMeme.lines[gMeme.selectedLineIdx];
+    currLine.lineX += dx
+    currLine.lineY += dy
 }
 
