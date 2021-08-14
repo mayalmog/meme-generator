@@ -9,78 +9,109 @@
     <link rel="stylesheet" href="./css/main.css">
 </head>
 
-<body onload="onInit()">
+<body class="flex flex-column show-gallery" onload="onInit()">
+    <div class="screen main-screen" onclick="onToggleScreen()"></div>
 
-    <header class="main-header flex align-center space-between">
-        <div class="logo flex grow-1"><img src="./images/logo/LOGO.png" alt=""></div>
-        <ul class="main-nav flex clean-list grow-1">
-            <li><a href="#" onclick="toggleDisplay()">Gallery</a></li>
-            <!-- <li><a href="#" onclick="toggleMenu()">Memes</a></li>
-            <li><a href="#" onclick="toggleMenu()">About</a></li> -->
+    <header class="main-header gradient-background ">
+        <div class="main-container flex align-center space-between">
+            <img class="logo" src="./images/logo/LOGO.png" alt="">
+            <ul class="main-nav flex clean-list justify-center">
+                <li><a class=" btn-gallery" href="#" onclick="onOpenGallery()">Gallery</a></li>
+                <li><a class="btn-memes" href="#" onclick="onToggleSavedMemesMenu()">Memes</a></li>
+                <li><a class="btn-about" href="#" onclick="onToggleAboutModal()">About</a></li>
+            </ul>
+            <!-- <button class="menu-btn" onclick="onToggleMenu()"></button> -->
+            <div class="screen sbout-screen" onclick="onToggleAboutModal()"></div>
+            <!-- <div class="about-modal flex flex-column justify-center">
+                <button class="close" onclick="onToggleAboutModal()">X</button>
+                <p>Made with 🥭 by May Almog</p>
+                <p>Check out more <a href="https://github.com/mayalmog?tab=repositories">here</a></p>
+            </div> -->
+        </div>
 
-        </ul>
     </header>
-    <section class="gallery-container grid grid-fill">
-        <img src="./images/meme-imgs (square)/1.jpg" onclick="onOpenEditor(1)">
-        <img src="./images/meme-imgs (square)/2.jpg" onclick="onOpenEditor(2)">
-        <img src="./images/meme-imgs (square)/3.jpg" onclick="onOpenEditor(3)">
-        <img src="./images/meme-imgs (square)/4.jpg" onclick="onOpenEditor(4)">
-        <img src="./images/meme-imgs (square)/5.jpg" onclick="onOpenEditor(5)">
-        <img src="./images/meme-imgs (square)/6.jpg" onclick="onOpenEditor(6)">
-        <img src="./images/meme-imgs (square)/7.jpg" onclick="onOpenEditor(7)">
-        <img src="./images/meme-imgs (square)/8.jpg" onclick="onOpenEditor(8)">
-        <img src="./images/meme-imgs (square)/9.jpg" onclick="onOpenEditor(9)">
-        <img src="./images/meme-imgs (square)/10.jpg" onclick="onOpenEditor(10)">
-        <img src="./images/meme-imgs (square)/11.jpg" onclick="onOpenEditor(11)">
-        <img src="./images/meme-imgs (square)/12.jpg" onclick="onOpenEditor(12)">
-        <img src="./images/meme-imgs (square)/13.jpg" onclick="onOpenEditor(13)">
-        <img src="./images/meme-imgs (square)/14.jpg" onclick="onOpenEditor(14)">
-        <img src="./images/meme-imgs (square)/15.jpg" onclick="onOpenEditor(15)">
-        <img src="./images/meme-imgs (square)/16.jpg" onclick="onOpenEditor(16)">
-        <img src="./images/meme-imgs (square)/17.jpg" onclick="onOpenEditor(17)">
-        <img src="./images/meme-imgs (square)/18.jpg" onclick="onOpenEditor(18)">
+
+    <main class="main-container">
+        <section class="gallery-container main-container">
+            <div class="img-container grid justify-center align-center">
+
+            </div>
+        </section>
 
 
-    </section>
+        <section class="editor-container hide meme-editor main-container  ">
+            <div class="canvas-container-board round-corners">
+                <div class="canvas-container my-canvasmy-canvas">
+                    <canvas class="round-corners" id="my-canvas" height="450" width="450"></canvas>
+                </div>
 
-    <main class="editor-container flex flex-row hide">
-        <div class="canvas-container grow-1 justify-center">
-            <h3>Container</h3>
-            <canvas id="my-canvas" height="450" width="450"></canvas>
-        </div>
+            </div>
+            <div class="canvas-editor-container round-corners">
+                <div class="canvas-editor flex flex-column align-center grow-1 justify-center">
+                    <input class="meme-line" name="meme-line" placeholder="Type text here" type="text">
 
-        <div class="canvas-editor flex flex-column align-center grow-1 justify-center">
-            <input name="meme-line" placeholder="Type text here" type="text">
-            <button class="font-size-increase" onclick="onChangeFontSize(+5)">A+</button>
-            <button class="font-size-decrease" onclick="onChangeFontSize(-5)">A-</button>
-            <button class="line-height-increase" onclick="onChangeLineHeight(-10)">↑</button>
-            <button class="line-height-decrease" onclick="onChangeLineHeight(+10)">↓</button>
-            <button class="addLine" onclick="onAddLine()">+</button>
-            <button class="switch-lines" onclick="onSwitchLines()">↑↓</button>
-            <button class="align-right" onclick="onChangeTxtAlign('left')">Align right</button>
-            <button class="align-center" onclick="onChangeTxtAlign('center')">Align center</button>
-            <button class="align-left" onclick="onChangeTxtAlign('right')">Align left</button>
-            <button class="delete-line" onclick="onDeleteLine()">Delete line</button>
-            <button class="fillText" onclick="toggleStroke()">S</button>
+                    <div class="first-line-edit-btns flex justify-center">
+                        <button class="edit-btn three-d switch-lines" onclick="onSwitchLines()">
+                            <span class="fas fa-exchange-alt"></span>
+                        </button>
+                        <button class="edit-btn three-d line-height-increase" onclick="onChangeLineHeight(-10)"><span
+                                class="fas fa-long-arrow-alt-up"></span>
+                        </button>
+                        <button class="edit-btn three-d line-height-decrease" onclick="onChangeLineHeight(+10)"><span
+                                class="fas fa-long-arrow-alt-down"></span>
+                        </button>
+                        <button class="edit-btn three-d add-line" onclick="onAddLine()"><span
+                                class="fas fa-plus"></span></button>
+                        <button class="edit-btn three-d delete-line" onclick="onDeleteLine()"><span
+                                class="fas fa-trash"></span></button>
+                    </div>
 
-            <select name="font" id="font" onchange="onSelectFont()">
-                <option value="Impact">Impact</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Monospace">Monospace</option>
-                <option value="Tahoma">Tahoma</option>
-            </select>
+                    <div class="second-line-edit-btns grid">
+                        <button class="edit-btn font-size-increase fas fa-plus-after"
+                            onclick="onChangeFontSize(+5)">A</button>
+                        <button class="edit-btn font-size-decrease fas fa-minus-after"
+                            onclick="onChangeFontSize(-5)">A</button>
 
-            <input type="color" id="color" class="text-color" onchange="onSelectFontColor()">
 
-            <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a>
-        </div>
+                        <button class="edit-btn align-left" onclick="onChangeTxtAlign('right')"><span
+                                class="fas fa-align-left"></span></button>
+                        <button class="edit-btn align-center" onclick="onChangeTxtAlign('center')"><span
+                                class="fas fa-align-center"></span></button>
+                        <button class="edit-btn align-right" onclick="onChangeTxtAlign('left')"><span
+                                class="fas fa-align-right"></span></button>
 
-        <div class="canvas-img-container"></div>
+
+
+                        <select class=" font-selector" name="font" id="font" onchange="onSelectFont()">
+                            <option class="impact" value="Impact">Impact</option>
+                            <option class="georgia" value="Georgia">Georgia</option>
+                            <option class="monospace" value="Monospace">Monospace</option>
+                            <option class="tahoma" value="Tahoma">Tahoma</option>
+                        </select>
+
+                        <button class="edit-btn fill-text" onclick="toggleStroke()">S</button>
+                        <button class="edit-btn text-color fas fa-color-palette">
+                            <input type="color" id="color" onchange="onSelectFontColor()">
+                        </button>
+                    </div>
+                    <form class="export-btns flex space-between" method="POST" enctype="multipart/form-data"
+                        onsubmit="uploadImg(this, event)"></form>
+                    <a href="#" class="btn export three-d download fas fa-download" onclick="downloadImg(this)"
+                        download="my-img.jpg">Download</a>
+                </div>
+
+            </div>
+
+            <div class="canvas-img-container"></div>
+        </section>
+
     </main>
-
 
     <script src="./js/meme-service.js"></script>
     <script src="./js/meme-controller.js"></script>
 </body>
 
 </html>
+
+<!-- sticker site: -->
+<!-- https://www.redbubble.com/shop/kawaii+stickers -->

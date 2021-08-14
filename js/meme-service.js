@@ -5,23 +5,62 @@ var gKeywords = { 'happy': 12, 'funny puk': 1 };
 var gMeme = {
     selectedImgId: 1,
     selectedLineIdx: 0,
-    lines: [{ txt: 'I never eat Falafel', size: 40, align: 'center', color: 'black', lineY: 0, lineX: 0, font: 'Impact', firstEdit: true, stroke: false }]
+    lines: [{ txt: '', size: 40, align: 'center', color: 'black', lineY: 0, lineX: 0, font: 'Impact', firstEdit: true, stroke: false }]
 }
 
 var gImgs = [
-    { id: 101, url: 'img/1.jpg', keywords: ['trump'] },
-    { id: 102, url: 'img/2.jpg', keywords: ['animals'] },
+    { id: 1, url: 'img/1.jpg', keywords: ['trump'] },
+    { id: 2, url: 'img/2.jpg', keywords: ['animals', 'dogs'] },
+    { id: 3, url: 'img/3.jpg', keywords: ['animals', 'baby', 'sleep'] },
+    { id: 4, url: 'img/4.jpg', keywords: ['animals', 'keyboard', 'sleep', 'cat'] },
+    { id: 5, url: 'img/5.jpg', keywords: ['baby', 'win', 'success'] },
+    { id: 6, url: 'img/6.jpg', keywords: ['aliens', 'funny'] },
+    { id: 7, url: 'img/7.jpg', keywords: ['baby', 'funny', 'surprised'] },
+    { id: 8, url: 'img/8.jpg', keywords: ['willy wonka', 'tell me'] },
+    { id: 9, url: 'img/9.jpg', keywords: ['baby', 'evil', 'sniggle'] },
+    { id: 10, url: 'img/10.jpg', keywords: ['obama', 'laughing', 'man'] },
+    { id: 11, url: 'img/11.jpg', keywords: ['fighters', 'kissing', 'sports'] },
+    { id: 12, url: 'img/12.jpg', keywords: ['צדיק', 'reliable', 'pointing'] },
+    { id: 13, url: 'img/13.jpg', keywords: ['cheers', 'gatsby'] },
+    { id: 14, url: 'img/14.jpg', keywords: ['what if', 'matrix'] },
+    { id: 15, url: 'img/15.jpg', keywords: ['boromir', 'lord'] },
+    { id: 16, url: 'img/16.jpg', keywords: ['star trek', 'frustrated', 'picard'] },
+    { id: 17, url: 'img/17.jpg', keywords: ['putin', 'frightening', 'victory', 'politics'] },
+    { id: 18, url: 'img/18.jpg', keywords: ['everywhere', 'toy story', 'buzz'] },
+
 ];
 
 function getMeme() {
     return gMeme;
 }
 
-function toggleDisplay() {
-    document.querySelector('.gallery-container').classList.toggle("hide");
-    document.querySelector('.gallery-container').classList.toggle("grid");
-    document.querySelector('.editor-container').classList.toggle("hide");
+function openEditor() {
+    //for hiding an element, it is required to remove any "display" attribute, also grid
+    document.querySelector('.gallery-container').classList.add("hide");
+    document.querySelector('.gallery-container').classList.remove("grid");
+    document.querySelector('.editor-container').classList.add("grid");
+    document.querySelector('.editor-container').classList.remove("hide");
+    document.querySelector('body').classList.remove("show-gallery");
+
 }
+
+function openGallery() {
+    document.querySelector('.gallery-container').classList.remove("hide");
+    document.querySelector('.editor-container').classList.remove("grid");
+    document.querySelector('.editor-container').classList.remove("grid");
+    document.querySelector('.editor-container').classList.add("hide");
+    document.querySelector('body').classList.add("show-gallery");
+}
+
+function toggleMemesModal() {
+    document.querySelector('body').classList.toggle("open-memes");
+}
+
+function toggleAboutModal() {
+    document.querySelector('body').classList.toggle("open-about");
+}
+
+
 
 // function drawPoint(x, y) {
 //     gCtx.beginPath();
@@ -69,5 +108,16 @@ function getLineInitialY(lineIdx) {
     } else {
         return gCanvas.height / 2;
     }
+}
+
+function getGalleryImgs() {
+
+    var strHTML = ``;
+
+    gImgs.forEach(img =>
+        strHTML += `<img src="./images/meme-imgs (square)/${img.id}.jpg" onclick="onOpenEditor(${img.id})"></img>`
+    )
+
+    return strHTML
 }
 

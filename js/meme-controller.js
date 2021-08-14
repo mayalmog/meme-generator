@@ -6,11 +6,10 @@ var gCurrTxtLine;
 
 function onInit() {
     gCanvas = document.getElementById('my-canvas')
-    console.log(gCanvas);
+
     gCtx = gCanvas.getContext('2d');
 
-    // drawImg();
-    // drawText();
+    renderGallery();
 
     //listen for text input:
     var input = document.querySelector('[name="meme-line"]');
@@ -18,12 +17,29 @@ function onInit() {
 
 }
 
+function renderGallery() {
+    var sqrImgsForRender = getGalleryImgs();
+    document.querySelector('.img-container').innerHTML = sqrImgsForRender;
+}
+
+function onOpenGallery() {
+    openGallery();
+}
+
 function onOpenEditor(num) {
-    toggleDisplay();
+    openEditor();
     var currMeme = getMeme();
     currMeme.selectedImgId = +num;
-    console.log(currMeme.selectedImgId);
+    console.log(num);
     drawImg(num);
+}
+
+function onToggleSavedMemesMenu() {
+    toggleMemesModal();
+}
+
+function onToggleAboutModal() {
+    toggleAboutModal();
 }
 
 
@@ -33,8 +49,8 @@ function drawImg(id) {
     var elImg = document.querySelector('.canvas-img');
     // Naive approach:
     // there is a risk that image is not loaded yet and nothing will be drawn on canvas
-
-    gCtx.drawImage(elImg, 0, 0, gCanvas.width, gCanvas.height)
+    console.log(gCanvas.width, gCanvas.height);
+    gCtx.drawImage(elImg, 0, 0, gCanvas.width, gCanvas.height);
 }
 
 function drawText() {
@@ -206,7 +222,6 @@ function onChangeTxtAlign(chosenAlign) {
     var memeId = +currMeme.selectedImgId;
     var currLine = currMeme.selectedLineIdx;
     currMeme.lines[currLine].align = chosenAlign;
-    console.log('currLine: ' + currLine + '. chosen align: ' + currMeme.lines[currLine].align);
     //render DOM:
     drawImg(memeId);
     drawText();
