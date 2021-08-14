@@ -17,21 +17,15 @@
             <ul class="main-nav flex clean-list ">
                 <li><a class=" btn-gallery" href="#" onclick="onOpenGallery()">Gallery</a></li>
                 <!-- <li><a class="btn-memes" href="#" onclick="onToggleSavedMemesMenu()">Memes</a></li> -->
-                <li><a class="btn-about" href="#" onclick="onToggleAboutModal()">About</a></li>
+                <!-- <li><a class="btn-about" href="#" onclick="onToggleAboutModal()">About</a></li> -->
             </ul>
             <button class="btn-menu-toggle fas fa-bars" onclick="onToggleMenu()"></button>
 
-            <div class="about-screen" onclick="onToggleAboutModal()"></div>
-            <!-- <div class="about-modal flex flex-column justify-center">
-                <button class="close" onclick="onToggleAboutModal()">X</button>
-                <p>Made with 🥭 by May Almog</p>
-                <p>Check out more <a href="https://github.com/mayalmog?tab=repositories">here</a></p>
-            </div> -->
         </div>
 
     </header>
     <div class="screen" onclick="onToggleMenu()"></div>
-
+    <div class="about-screen" onclick="onToggleAboutModal()"></div>
     <main class="main-container">
         <section class="gallery-container main-container">
             <div class="img-container grid justify-center align-center">
@@ -107,6 +101,15 @@
         </section>
 
     </main>
+
+    <footer>
+        <div class="about flex flex-column justify-center align-center">
+
+            <p>Made with 🥭 by May Almog. Check out more <a href="https://github.com/mayalmog?tab=repositories">here</a>
+            </p>
+
+        </div>
+    </footer>
 
     <script src="./js/meme-service.js"></script>
     <script src="./js/meme-controller.js"></script>

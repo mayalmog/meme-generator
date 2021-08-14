@@ -24,6 +24,8 @@ function onToggleMenu() {
     document.querySelector('body').classList.toggle('menu-open');
 }
 
+
+
 function renderGallery() {
     var sqrImgsForRender = getGalleryImgs();
     document.querySelector('.img-container').innerHTML = sqrImgsForRender;
