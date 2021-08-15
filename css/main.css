@@ -109,12 +109,14 @@ body {
 
 .main-container {
     padding: 10px;
-    min-width: 450px;
-    margin: auto
+    min-width: 360px;
+    margin: 0;
 }
 
 @media (min-width: 630px) {
     .main-container {
+        min-width: 450px;
+        margin: auto;
         width: 630px;
     }
 }
